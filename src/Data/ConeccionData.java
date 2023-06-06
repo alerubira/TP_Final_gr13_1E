@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  */
 public class ConeccionData {
     private static final String URL="jdbc:mysql://localhost/";
-    private static final String DB="tpfinal";
+    private static final String DB="gestion";
     private static final String USUARIO="root";
     private static String PASSWORD="";
 

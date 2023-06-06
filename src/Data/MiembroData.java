@@ -32,7 +32,7 @@ public class MiembroData {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 miembro.setIdMiembro(rs.getInt("idMiembro"));
-                JOptionPane.showMessageDialog(null, "Miembro cargado nexitosamente.");
+                JOptionPane.showMessageDialog(null, "Miembro cargado exitosamente.");
             } 
             ps.close();
             
