@@ -63,6 +63,31 @@ public class ComentariosData {
         }
     }
     
-    
+    public Comentarios buscarComentariosPorId(int id){
+        Comentarios c = null;
+        String sql = "SELECT * FROM comentarios WHERE idComentario = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                c =new Comentarios();
+                c.setIdComentario(rs.getInt("idComentario"));
+                c.setComentario(rs.getString("comentarios"));
+                TareaData td = new TareaData();
+                c.setTarea(td.busacarTareaId(rs.getInt("idTarea")));
+                c.setFechaAvance(rs.getDate("fechaAvance").toLocalDate());//pasar Datesql a local Date
+               
+            } else {
+             JOptionPane.showMessageDialog(null, "No existe el comentario", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla comentario "+ex.getMessage());
+        }
+        return c;
+    }
     
 }

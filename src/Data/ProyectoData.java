@@ -64,5 +64,32 @@ public class ProyectoData {
             JOptionPane.showMessageDialog(null, "El proyecto tiene equipos trabajando");
         }
     }
+      
+    public Proyecto buscarProyectoPorId(int id){
+        Proyecto p = null;
+        String sql = "SELECT * FROM proyecto WHERE idProyecto = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                p =new Proyecto();
+                p.setIdProyecto(rs.getInt("IdProyecto"));
+                p.setNombre(rs.getString("nombre"));
+                p.setEstado(rs.getInt("estado"));
+                p.setDescripcion(rs.getString("descripcion"));
+                p.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());//pasar Datesql a local Date
+               
+            } else {
+             JOptionPane.showMessageDialog(null, "No existe el Proyecto", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Proyecto "+ex.getMessage());
+        }
+        return p;
+    }
     
 }

@@ -1,5 +1,6 @@
 package Data;
 
+import Entidad.Equipo;
 import Entidad.EquipoMiembros;
 import Entidad.Tarea;
 import java.sql.Connection;
@@ -60,6 +61,36 @@ public class EquipoMiembrosData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "El Miembro esta en un equipo ");
         }
+    }
+    
+    public EquipoMiembros buscarEquipoMiembroPorId(int id){
+        EquipoMiembros em = null;
+        String sql = "SELECT * FROM equipomiembros WHERE idEquipoMiembros = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                em =new EquipoMiembros();
+                em.setIdEquipoMiembros(rs.getInt("IdEquipoMiembros"));
+                em.setFechaIncorporacion(rs.getDate("fechaIncorporacion").toLocalDate());//pasar datesql a localdate
+                EquipoData ed = new EquipoData();
+                em.setEquipo(ed.buscarEquipoPorId(rs.getInt("idEquipo")));
+                MiembroData md = new MiembroData();
+                em.setMiembro(md.buscarMiembroPorId(rs.getInt("IdMiembro")));
+             
+               
+            } else {
+             JOptionPane.showMessageDialog(null, "No existen Miembros en el Equipo", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla EquipoMiembros "+ex.getMessage());
+        }
+        return em;
+        
     }
 
 }

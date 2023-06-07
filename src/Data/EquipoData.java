@@ -62,5 +62,33 @@ public class EquipoData {
             JOptionPane.showMessageDialog(null, "El Equipo esta ligado a un proyecto ");
         }
     }
+    
+    public Equipo buscarEquipoPorId(int id){
+        Equipo eq = null;
+        String sql = "SELECT * FROM equipo WHERE idEquipo = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                eq =new Equipo();
+                eq.setIdEquipo(rs.getInt("IdEquipo"));
+                eq.setNombre(rs.getString("nombre"));
+                eq.setEstado(rs.getBoolean("estado"));
+                eq.setFechaCreacion(rs.getDate("fechaCreacion").toLocalDate());
+                ProyectoData pd = new ProyectoData();
+                eq.setProyecto(pd.buscarProyectoPorId(rs.getInt("idProyecto")));
+               
+            } else {
+             JOptionPane.showMessageDialog(null, "No existe el equipo", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla equipo "+ex.getMessage());
+        }
+        return eq;
+    }
 
 }

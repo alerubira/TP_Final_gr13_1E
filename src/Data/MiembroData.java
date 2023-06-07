@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * @author Gabriel
  */
 public class MiembroData {
-
+    
     private Connection con = null;
 
     public MiembroData() {
@@ -62,4 +62,31 @@ public class MiembroData {
         }
     }
 
+    public Miembro buscarMiembroPorId(int id){
+        Miembro miembro = null;
+        String sql = "SELECT idMiembro, apellido, nombre, dni, estado FROM miembro WHERE idMiembro = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                miembro =new Miembro();
+                miembro.setIdMiembro(rs.getInt("idMiembro"));
+                miembro.setDni(rs.getInt("dni"));
+                miembro.setApellido(rs.getString("apellido"));
+                miembro.setNombre(rs.getString("nombre"));
+                miembro.setEstado(rs.getBoolean("estado"));
+               
+            } else {
+             JOptionPane.showMessageDialog(null, "No existe el miembro", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Miembro "+ex.getMessage());
+        }
+        return miembro;
+    }
+    
 }

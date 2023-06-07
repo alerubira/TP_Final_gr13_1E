@@ -60,6 +60,35 @@ public class TareaData {
         }
     }
     
+    public Tarea busacarTareaId(int id){
+        Tarea tarea = null;
+        String sql = "SELECT * FROM tarea WHERE idTarea = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                tarea =new Tarea();
+                tarea.setIdTarea(rs.getInt("idTarea"));
+                tarea.setNombr(rs.getString("nombre"));
+                tarea.setFechaCreacion(rs.getDate("fechaCreacion").toLocalDate());//pasar datesql a localdate
+                tarea.setFechaCierre(rs.getDate("fechaCierre").toLocalDate());
+                tarea.setEstado(rs.getInt("estado"));
+                EquipoMiembrosData emd = new EquipoMiembrosData();
+                tarea.setEquipoMiembros(emd.buscarEquipoMiembroPorId(rs.getInt("IdEquipoMiembro")));
+             
+               
+            } else {
+             JOptionPane.showMessageDialog(null, "No existe la tarea", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla tarea "+ex.getMessage());
+        }
+        return tarea;
+    }
     
 
 }
