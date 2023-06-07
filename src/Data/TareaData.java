@@ -41,5 +41,25 @@ public class TareaData {
         }
 
     }
+    
+    public void borrarTarea(int idTarea){
+        String sql = "DELETE FROM `tarea` WHERE idTarea = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idTarea);   //Para setear el id donde esta el signo ?
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, " Tarea Borrada Exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "La Tarea no existe");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "La Tarea tiene miembros trabajando ");
+        }
+    }
+    
+    
 
 }

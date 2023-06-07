@@ -1,4 +1,3 @@
-
 package Data;
 
 import Entidad.Miembro;
@@ -15,11 +14,14 @@ import javax.swing.JOptionPane;
  * @author Gabriel
  */
 public class MiembroData {
-     private Connection con = null;
-     public MiembroData() {
+
+    private Connection con = null;
+
+    public MiembroData() {
         con = ConeccionData.getConexion();
-      }
-     public void guardarMiembro(Miembro miembro) {
+    }
+
+    public void guardarMiembro(Miembro miembro) {
 
         String sql = "INSERT INTO miembro (dni, apellido, nombre, estado) VALUES (?, ?, ?, ?)";
         try {
@@ -33,12 +35,31 @@ public class MiembroData {
             if (rs.next()) {
                 miembro.setIdMiembro(rs.getInt("idMiembro"));
                 JOptionPane.showMessageDialog(null, "Miembro cargado exitosamente.");
-            } 
+            }
             ps.close();
-            
+
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Miembro"+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Miembro" + ex.getMessage());
         }
 
     }
+
+    public void borrarMiembro(int idMiembro) {
+        String sql = "DELETE FROM `miembro` WHERE idMiembro = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idMiembro);   //Para setear el id donde esta el signo ?
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, " Miembro Borrado Exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "El miembro no existe");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "El miembro esta en un equipo ");
+        }
+    }
+
 }

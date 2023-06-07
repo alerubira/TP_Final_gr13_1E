@@ -47,4 +47,22 @@ public class ProyectoData {
 
     }
     
+      public void borrarProyecto (int idProyecto){
+        String sql = "DELETE FROM `proyecto` WHERE idProyecto = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idProyecto);   //Para setear el id donde esta el signo ?
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, " Proyecto Borrado Exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "El proyecto no existe");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "El proyecto tiene equipos trabajando");
+        }
+    }
+    
 }
