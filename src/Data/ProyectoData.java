@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -118,4 +120,30 @@ public class ProyectoData {
         }
         
     }
+      
+    public List<Proyecto> buscarProyectoPorProgreso(int estado){
+        List<Proyecto> proyectos = new ArrayList<>();
+        
+        try {
+            String sql = "SELECT * FROM proyecto WHERE estado = ? ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, estado);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Proyecto c1 = new Proyecto();     
+                c1.setDescripcion(rs.getString("descripcion"));
+                c1.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                c1.setNombre(rs.getString("nombre"));
+                c1.setIdProyecto(rs.getInt("idProyecto"));
+                c1.setEstado(estado);
+                proyectos.add(c1);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Proyectos "+ex.getMessage());
+        }
+        return proyectos;
+    }
+    
+    
 }
