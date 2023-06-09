@@ -89,4 +89,31 @@ public class MiembroData {
         return miembro;
     }
     
+    
+    public void actualizarMiembro(Miembro miembro) {
+
+        String sql = "UPDATE miembro SET dni = ?, apellido = ? , nombre = ? , estado = ? WHERE  idMiembro = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, miembro.getDni());
+            ps.setString(2, miembro.getApellido());
+            ps.setString(3,miembro.getNombre());
+            ps.setBoolean(4, miembro.getEstado());
+            ps.setInt(5, miembro.getIdMiembro());
+            int exito = ps.executeUpdate();
+            
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Miembro Modificado Exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "El miembro no existe");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Miembro "+ex.getMessage());
+        }
+        
+    }
+    
 }

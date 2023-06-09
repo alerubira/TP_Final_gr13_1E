@@ -91,4 +91,30 @@ public class EquipoData {
         return eq;
     }
 
+    public void actualizarEquipo(Equipo equipo) {
+
+        String sql = "UPDATE equipo SET idProyecto = ?, nombre = ? , estado = ?  WHERE  idequipo = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, equipo.getProyecto().getIdProyecto());
+            ps.setString(2, equipo.getNombre());
+            ps.setBoolean(3,equipo.getEstado());
+            ps.setInt(4, equipo.getIdEquipo());
+            
+            int exito = ps.executeUpdate();
+            
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Equipo Modificado Exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "El equipo no existe");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Equipo "+ex.getMessage());
+        }
+        
+    }
+    
 }

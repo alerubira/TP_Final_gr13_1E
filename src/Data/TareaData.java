@@ -90,5 +90,32 @@ public class TareaData {
         return tarea;
     }
     
+        public void actualizarTarea(Tarea tarea) {
+
+        String sql = "UPDATE tarea SET  nombre = ?, fechaCreacion = ? , fechaDeCierre = ? , estado = ? WHERE  idTarea = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+        //    ps.setInt(1, tarea.getEquipoMiembros().getIdEquipoMiembros());
+            ps.setString(1, tarea.getNombr());
+            ps.setDate(2, Date.valueOf(tarea.getFechaCreacion()));
+            ps.setDate(3, Date.valueOf(tarea.getFechaCierre()));
+            ps.setInt(4, tarea.getEstado());
+            ps.setInt(5, tarea.getIdTarea());
+            int exito = ps.executeUpdate();
+            
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Tarea Modificado Exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "La tarea no existe");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Tarea "+ex.getMessage());
+        }
+        
+    }
+    
 
 }

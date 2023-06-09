@@ -3,12 +3,15 @@ package Data;
 
 import Entidad.Comentarios;
 import Entidad.EquipoMiembros;
+import Entidad.Tarea;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -88,6 +91,57 @@ public class ComentariosData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla comentario "+ex.getMessage());
         }
         return c;
+    }
+    
+     public void actualizarComentario(Comentarios comentario) {
+
+        String sql = "UPDATE comentarios SET comentario = ?, fechaAvance = ?  WHERE  idComentario = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, comentario.getComentario());
+            ps.setDate(2, Date.valueOf(comentario.getFechaAvance()));
+            ps.setInt(3, comentario.getIdComentario());
+            int exito = ps.executeUpdate();
+            
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Comentario Modificado Exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "El comentario no existe");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Comentario "+ex.getMessage());
+        }
+        
+    }
+     
+      public List<Comentarios> obtenerComentarioPorTarea(int idTarea){
+        List<Comentarios> comentarios = new ArrayList<>();
+        
+        try {
+            String sql = "SELECT * FROM comentarios WHERE idTarea = ? ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idTarea);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Comentarios c1 = new Comentarios();
+                TareaData ad = new TareaData();     
+                c1.setComentario(rs.getString("comentario"));
+                c1.setFechaAvance(rs.getDate("fechaAvance").toLocalDate());
+                c1.setIdComentario(rs.getInt("idComentario"));
+                c1.setTarea(ad.busacarTareaId(rs.getInt("idTarea")));
+                comentarios.add(c1);
+            }
+            ps.close();
+           
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Inscripcion "+ex.getMessage());
+        }
+        return comentarios;
+        
     }
     
 }

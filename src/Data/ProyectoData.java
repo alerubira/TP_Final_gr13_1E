@@ -1,6 +1,7 @@
 
 package Data;
 
+import Entidad.Comentarios;
 import Entidad.Proyecto;
 import Entidad.Tarea;
 import java.sql.Connection;
@@ -92,4 +93,29 @@ public class ProyectoData {
         return p;
     }
     
+      public void actualizarProyecto(Proyecto proyecto) {
+
+        String sql = "UPDATE proyecto SET nombre = ?, descripcion = ? , fechaDeInicio = ? , estado = ? WHERE  idProyecto = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, proyecto.getNombre());
+            ps.setString(2, proyecto.getDescripcion());
+            ps.setDate(3, Date.valueOf(proyecto.getFechaInicio()));
+            ps.setInt(4,proyecto.getEstado());
+            ps.setInt(5, proyecto.getIdProyecto());
+            int exito = ps.executeUpdate();
+            
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Proyecto Modificado Exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "El proyecto no existe");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Proyecto "+ex.getMessage());
+        }
+        
+    }
 }
