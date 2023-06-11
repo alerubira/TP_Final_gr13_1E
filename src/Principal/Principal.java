@@ -34,9 +34,15 @@ public class Principal {
 //        Comentarios c1 = new Comentarios(t1,"Hay 70 clavos",LocalDate.of(1995, 6, 1));
 //        
 //        TareaData td = new TareaData();
+
 //        EquipoData ed = new EquipoData();
         EquipoMiembrosData emd = new EquipoMiembrosData();
 //        ProyectoData pd = new ProyectoData();
+
+             EquipoData ed = new EquipoData();
+//        EquipoMiembrosData emd = new EquipoMiembrosData();
+      //  ProyectoData pd = new ProyectoData();
+
 //        ComentariosData cd = new ComentariosData();
 ////        
 //        mD.guardarMiembro(ale);
@@ -46,6 +52,7 @@ public class Principal {
 //        emd.guardarEquipoMiembro(eq1);
 //        td.guardarTarea(t1);
 //        cd.guardarComentarios(c1);
+
 //        List<Comentarios> comentario = cd.obtenerComentarioPorTarea(12);
 //
 //        for (Comentarios comentarios : comentario) {
@@ -53,6 +60,13 @@ public class Principal {
 //        }
 
           emd.buscarMiembro(16);
+
+        List<Equipo> equipos = ed.buscarEquipoPorEstado(true)  ;
+
+        for (Equipo equipo : equipos) {
+            System.out.println(equipo);
+        }
+
 
     }
 
