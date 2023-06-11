@@ -24,24 +24,28 @@ public class Principal {
 
     public static void main(String[] args) {
 //        Miembro ale=new Miembro(29833093,"Uriel","Serrano",true);
-//        MiembroData mD = new MiembroData();
+        MiembroData md = new MiembroData();
+//          Miembro a = new Miembro(44753252,"Paco", "Perez",true);
+//          Miembro a1 = new Miembro(2953745,"Dario", "Benedetto",true);
+//          Miembro a2 = new Miembro(40752652,"Esequiel", "Barco",true);
+//          mD.guardarMiembro(a);
+//          mD.guardarMiembro(a1);
+//          mD.guardarMiembro(a2);
 ////        
 ////        
 //        Proyecto p1 = new Proyecto("Trabajo 1","Organizar material ",LocalDate.of(1988, 7, 1),1);
 //        Equipo e1 = new Equipo(p1,"Boca",LocalDate.of(1982, 3, 4),true);
-//        EquipoMiembros eq1 = new EquipoMiembros(e1,ale,LocalDate.of(1991, 4, 4));
-//        Tarea t1 = new Tarea(eq1,"Ordenar clavos",LocalDate.of(1995,5,6),LocalDate.of(1995, 11, 1),1);
+          
 //        Comentarios c1 = new Comentarios(t1,"Hay 70 clavos",LocalDate.of(1995, 6, 1));
 //        
-//        TareaData td = new TareaData();
+          TareaData td = new TareaData();
 
-//        EquipoData ed = new EquipoData();
-        EquipoMiembrosData emd = new EquipoMiembrosData();
+          EquipoMiembrosData emd = new EquipoMiembrosData();
 //        ProyectoData pd = new ProyectoData();
 
-             EquipoData ed = new EquipoData();
+          EquipoData ed = new EquipoData();
 //        EquipoMiembrosData emd = new EquipoMiembrosData();
-      //  ProyectoData pd = new ProyectoData();
+        ProyectoData pd = new ProyectoData();
 
 //        ComentariosData cd = new ComentariosData();
 ////        
@@ -58,16 +62,31 @@ public class Principal {
 //        for (Comentarios comentarios : comentario) {
 //                System.out.println(comentarios);
 //        }
+//        Miembro miembro = mD.buscarMiembroPorId(3);
+//        Equipo equipo = ed.buscarEquipoPorId(1);
+//
+//        EquipoMiembros a = new EquipoMiembros(equipo, miembro, LocalDate.now());
+//        emd.guardarEquipoMiembro(a);
 
-          emd.buscarMiembro(16);
+//          EquipoMiembros eq1 = emd.buscarEquipoMiembroPorId(1);
+//          EquipoMiembros eq2 = emd.buscarEquipoMiembroPorId(3);
+//          EquipoMiembros eq3 = emd.buscarEquipoMiembroPorId(4);
+//          Tarea t1 = new Tarea(eq1,"Ordenar Tuercas",LocalDate.of(1995,5,6),LocalDate.of(1995, 11, 1),1);
+//          Tarea t2 = new Tarea(eq2,"Ordenar tornillos",LocalDate.of(1995,5,6),LocalDate.of(1995, 11, 1),1);
+//          Tarea t3 = new Tarea(eq3,"Ordenar alamierda",LocalDate.of(1995,5,6),LocalDate.of(1995, 11, 1),1);
+//          
+//          td.guardarTarea(t1);
+//          td.guardarTarea(t2);
+//          td.guardarTarea(t3);
 
-        List<Equipo> equipos = ed.buscarEquipoPorEstado(true)  ;
+//            System.out.println(emd.buscarTareaPorMiembro(1));
+//            System.out.println(emd.buscarTareaPorMiembro(2));
+//            System.out.println(emd.buscarTareaPorMiembro(3));
+//            System.out.println(emd.buscarTareaPorMiembro(4));
 
-        for (Equipo equipo : equipos) {
-            System.out.println(equipo);
+            List<Equipo>  m = ed.traerTodos();
+            for (Equipo tarea : m) {
+                System.out.println(tarea);
         }
-
-
-    }
-
-}
+            }
+        }

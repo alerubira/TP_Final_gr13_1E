@@ -1,12 +1,15 @@
 package Data;
 
 import Entidad.Miembro;
+import Entidad.Tarea;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -116,4 +119,30 @@ public class MiembroData {
         
     }
     
+    public List<Miembro> traerTodos(){
+        List<Miembro> miembros = new ArrayList();
+        String sql = "SELECT * FROM miembro";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+               Miembro t = new Miembro();
+               
+               t.setApellido(rs.getString("apellido"));
+               t.setNombre(rs.getString("nombre"));
+               t.setDni(rs.getInt("dni"));
+               t.setEstado(rs.getBoolean("estado"));
+               t.setIdMiembro(rs.getInt("idMiembro"));
+                           
+               miembros.add(t);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla equipoMiembro " + ex.getMessage());
+        }
+        
+        return miembros;
+    }
 }

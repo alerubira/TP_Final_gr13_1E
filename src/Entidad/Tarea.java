@@ -85,7 +85,7 @@ public class Tarea {
 
     @Override
     public String toString() {
-        return "Tarea{" + "idTarea=" + idTarea + ", equipoMiembros=" + equipoMiembros + ", nombr=" + nombr + ", fechaCreacion=" + fechaCreacion + ", fechaCierre=" + fechaCierre + ", estado=" + estado + '}';
+        return "Tarea{" + "idTarea=" + idTarea + ", equipoMiembros=" + equipoMiembros.getIdEquipoMiembros() + ", nombr=" + nombr + ", fechaCreacion=" + fechaCreacion + ", fechaCierre=" + fechaCierre + ", estado=" + estado + '}';
     }
    
    

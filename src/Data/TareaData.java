@@ -23,7 +23,7 @@ public class TareaData {
 
     public void guardarTarea(Tarea tarea) {
 
-        String sql = "INSERT INTO tarea (idEquipoMiembro, nombre, fechaCreacion, fechaCierre,estado) VALUES (?, ?, ?, ?,?)";
+        String sql = "INSERT INTO tarea (idEquipoMiembros, nombre, fechaCreacion, fechaCierre,estado) VALUES (?, ?, ?, ?,?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, tarea.getEquipoMiembros().getIdEquipoMiembros());
@@ -100,7 +100,6 @@ public class TareaData {
 
         try {
             ps = con.prepareStatement(sql);
-        //    ps.setInt(1, tarea.getEquipoMiembros().getIdEquipoMiembros());
             ps.setString(1, tarea.getNombr());
             ps.setDate(2, Date.valueOf(tarea.getFechaCreacion()));
             ps.setDate(3, Date.valueOf(tarea.getFechaCierre()));
@@ -119,6 +118,32 @@ public class TareaData {
         }
         
     }
+    public List<Tarea> traerTodos(){
+        List<Tarea> tareas = new ArrayList();
+        String sql = "SELECT * FROM tarea";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+            Tarea tarea =new Tarea();
+                tarea.setIdTarea(rs.getInt("idTarea"));
+                tarea.setNombr(rs.getString("nombre"));
+                tarea.setFechaCreacion(rs.getDate("fechaCreacion").toLocalDate());//pasar datesql a localdate
+                tarea.setFechaCierre(rs.getDate("fechaCierre").toLocalDate());
+                tarea.setEstado(rs.getInt("estado"));
+                EquipoMiembrosData emd = new EquipoMiembrosData();
+                tarea.setEquipoMiembros(emd.buscarEquipoMiembroPorId(rs.getInt("IdEquipoMiembros")));
+                           
+             tareas.add(tarea);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla tarea " + ex.getMessage());
+        }
         
+        return tareas;
+    }
 
 }

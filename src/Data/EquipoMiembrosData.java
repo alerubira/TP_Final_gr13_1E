@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -93,43 +95,91 @@ public class EquipoMiembrosData {
 
     }
 
-    public Miembro buscarMiembro(int idEquipo) {
+    public List<Miembro> buscarMiembrosPorEquipo(int idEquipo) {
 
-        Miembro miembro = null;
-        int idMiembro;
-        String sql = "SELECT idMiembro FROM equipomiembros WHERE idEquipo = ?";
+        List<Miembro> miembros = new ArrayList();
+        String sql = "SELECT M.* FROM miembro M JOIN equipomiembros EM ON(M.idMiembro=EM.idMiembro) JOIN equipo E ON(EM.idEquipo=E.idEquipo) WHERE E.idEquipo = ?";
         PreparedStatement ps = null;
         try {
-
             ps = con.prepareStatement(sql);
             ps.setInt(1, idEquipo);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-
-                idMiembro = rs.getInt("idMiembro");
-
-            } else {
-                JOptionPane.showMessageDialog(null, "No existe el miembro", "Error!", JOptionPane.ERROR_MESSAGE);
+            while (rs.next()) {
+               Miembro m = new Miembro();
+               
+               m.setIdMiembro(rs.getInt("idMiembro"));
+               m.setNombre(rs.getString("nombre"));
+               m.setApellido(rs.getString("apellido"));
+               m.setDni(rs.getInt("dni"));
+               m.setEstado(rs.getBoolean("estado"));
+            
+                miembros.add(m);
             }
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Miembro " + ex.getMessage());
         }
-//        MiembroData mi = new MiembroData();
-//        miembro = mi.buscarMiembroPorId(idMiembro);
-//        return miembro;
-        return null;
+        
+        return miembros;
     }
+    
+    public List<Tarea> buscarTareasPorEquipo(int idEquipo){
+        List<Tarea> tareas = new ArrayList();
+        String sql = "SELECT T.* FROM tarea T JOIN equipomiembros EM ON(T.idEquipoMiembros=EM.idEquipoMiembros) JOIN equipo E ON(EM.idEquipo=E.idEquipo) WHERE E.idEquipo = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idEquipo);
+            ResultSet rs = ps.executeQuery();
 
-public void buscarMiembros(int idEquipo){
+            while (rs.next()) {
+               Tarea t = new Tarea();
+               
+               t.setIdTarea(rs.getInt("idTarea"));
+               t.setNombr(rs.getString("nombre"));
+               t.setFechaCierre(rs.getDate("fechaCierre").toLocalDate());
+               t.setFechaCreacion(rs.getDate("fechaCreacion").toLocalDate());
+               t.setEstado(rs.getInt("estado"));
+               EquipoMiembrosData emd = new EquipoMiembrosData();
+               t.setEquipoMiembros(emd.buscarEquipoMiembroPorId(rs.getInt("idEquipoMiembros")));
+            
+                tareas.add(t);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla equipoMiembro " + ex.getMessage());
+        }
         
+        return tareas;
     }
-    public void buscarTareas(int idEquipo){
+    public Tarea buscarTareaPorMiembro(int idMiembro){
+        Tarea t = new Tarea();
+        String sql = "SELECT T.* FROM tarea T JOIN equipomiembros EM ON(T.idEquipoMiembros=EM.idEquipoMiembros) JOIN miembro M ON(EM.idMiembro=M.idMiembro) WHERE M.idMiembro = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idMiembro);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+               t.setIdTarea(rs.getInt("idTarea"));
+               t.setNombr(rs.getString("nombre"));
+               t.setFechaCierre(rs.getDate("fechaCierre").toLocalDate());
+               t.setFechaCreacion(rs.getDate("fechaCreacion").toLocalDate());
+               t.setEstado(rs.getInt("estado"));
+               EquipoMiembrosData emd = new EquipoMiembrosData();
+               t.setEquipoMiembros(emd.buscarEquipoMiembroPorId(rs.getInt("idEquipoMiembros")));    
+            }else{
+                JOptionPane.showMessageDialog(null, "El miembro no tiene ninguna tarea", "Error!", JOptionPane.ERROR_MESSAGE);
+                t = null;
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla equipoMiembro " + ex.getMessage());
+        }
         
-    }
-    public void buscarTarea(int idMiembro){
-        
+        return t;
     }
 //    public void buscarMiembroPorIdTarea(int idTarea){
 //        

@@ -145,5 +145,29 @@ public class ProyectoData {
         return proyectos;
     }
     
+    public List<Proyecto> traerTodos(){
+        List<Proyecto> proyectos = new ArrayList();
+        String sql = "SELECT * FROM proyecto";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+               Proyecto c1 = new Proyecto();     
+                c1.setDescripcion(rs.getString("descripcion"));
+                c1.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                c1.setNombre(rs.getString("nombre"));
+                c1.setIdProyecto(rs.getInt("idProyecto"));
+                c1.setEstado(rs.getInt("estado"));
+                proyectos.add(c1);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla equipoMiembro " + ex.getMessage());
+        }
+        
+        return proyectos;
+    }
     
 }
