@@ -94,34 +94,35 @@ public class EquipoMiembrosData {
     }
 
     public Miembro buscarMiembro(int idEquipo) {
-         
+
         Miembro miembro = null;
-        String sql = "SELECT idMiembro, apellido, nombre, dni, estado FROM equipomiembros WHERE idEquipo = ?";
+        int idMiembro;
+        String sql = "SELECT idMiembro FROM equipomiembros WHERE idEquipo = ?";
         PreparedStatement ps = null;
         try {
+
             ps = con.prepareStatement(sql);
-            ps.setInt(1,idEquipo);
+            ps.setInt(1, idEquipo);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                miembro =new Miembro();
-                miembro.setIdMiembro(rs.getInt("idMiembro"));
-                miembro.setDni(rs.getInt("dni"));
-                miembro.setApellido(rs.getString("apellido"));
-                miembro.setNombre(rs.getString("nombre"));
-                miembro.setEstado(rs.getBoolean("estado"));
-               
+
+                idMiembro = rs.getInt("idMiembro");
+
             } else {
-             JOptionPane.showMessageDialog(null, "No existe el miembro", "Error!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "No existe el miembro", "Error!", JOptionPane.ERROR_MESSAGE);
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Miembro "+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Miembro " + ex.getMessage());
         }
-        return miembro;
+//        MiembroData mi = new MiembroData();
+//        miembro = mi.buscarMiembroPorId(idMiembro);
+//        return miembro;
+        return null;
     }
-    
-    public void buscarMiembros(int idEquipo){
+
+public void buscarMiembros(int idEquipo){
         
     }
     public void buscarTareas(int idEquipo){
