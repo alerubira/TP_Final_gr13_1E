@@ -7,6 +7,7 @@ package Vistas;
 import Data.ProyectoData;
 import Entidad.Proyecto;
 import java.time.LocalDate;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,12 +38,15 @@ public class ViewProyecto extends javax.swing.JInternalFrame {
         jtxtNombre = new javax.swing.JTextField();
         jtxtDescripcion = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jcbEstado = new javax.swing.JCheckBox();
         jbGuardar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jdcFechaInicio = new com.toedter.calendar.JDateChooser();
+        jcbEstado = new javax.swing.JComboBox<>();
+        jbBuscar = new javax.swing.JButton();
+        jtxtIdBuscar = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
-        jLabel1.setText("CREAR NUEVO PROYECTO");
+        jLabel1.setText("FORMULARIO PROYECTO");
 
         jLabel2.setText("Nombre:");
 
@@ -72,6 +76,17 @@ public class ViewProyecto extends javax.swing.JInternalFrame {
             }
         });
 
+        jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
+
+        jbBuscar.setText("BUSCAR");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("ID:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,55 +98,65 @@ public class ViewProyecto extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
                     .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(11, 11, 11))
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtxtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jdcFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jtxtIdBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jbBuscar))
+                            .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jbGuardar)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton2)))
-                        .addContainerGap(60, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jtxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jdcFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(89, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jtxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel6)
+                    .addComponent(jtxtIdBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jtxtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel5))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jdcFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jdcFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbGuardar)
                     .addComponent(jButton2))
-                .addGap(16, 16, 16))
+                .addGap(53, 53, 53))
         );
 
         pack();
@@ -146,17 +171,58 @@ public class ViewProyecto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-        ProyectoData materiaData = new ProyectoData();
+
+        ProyectoData proyectoData = new ProyectoData();
         Proyecto proyecto = new Proyecto();
         proyecto.setNombre(jtxtNombre.getText());
         proyecto.setDescripcion(jtxtDescripcion.getText());
-//        
-//        proyecto.setFechaInicio(jdcFechaInicio.getCalendar());
-//        proyecto.setEstado(jcbEstado.isSelected());
-//        
-//        materiaData.guardarMateria(materia);
+        java.util.Date fechaSeleccionada = jdcFechaInicio.getDate();
+        java.sql.Date fechaSQL = new java.sql.Date(fechaSeleccionada.getTime());
+        // Convertir a LocalDate
+        LocalDate fechaLocal = fechaSQL.toLocalDate();
+        proyecto.setFechaInicio(fechaLocal);
+        jcbEstado.addItem(String.valueOf(1));
+        jcbEstado.addItem(String.valueOf(2));
+        jcbEstado.addItem(String.valueOf(3));
+        String estadoSeleccionadoString = (String) jcbEstado.getSelectedItem();
+        int estadoSeleccionado = Integer.parseInt(estadoSeleccionadoString);
+        proyecto.setEstado(estadoSeleccionado);
+        proyectoData.guardarProyecto(proyecto);
+        limpiar();
+
     }//GEN-LAST:event_jbGuardarActionPerformed
 
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+//        if (jtxtIdBuscar.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Campo ID VACIO!!", "Advertencia!", JOptionPane.WARNING_MESSAGE);
+//            jtxtIdBuscar.requestFocus();
+//        } else {
+//            try {
+////                jbBorrar.setEnabled(true);
+////                jbActualizar.setEnabled(true);
+//                ProyectoData proyectoData = new ProyectoData();
+//                Proyecto proyecto = new Proyecto();
+//                int id = Integer.parseInt(jtxtIdBuscar.getText());
+//                proyecto = proyectoData.buscarProyectoPorId(id);
+//                jtxtNombre.setText(proyecto.getNombre());
+//                jtxtDescripcion.setText(proyecto.getDescripcion());
+////                jtxtDni.setText(alumno.getDni() + "");
+////                jtxtFecha.setText(alumno.getFechaNacimiento().toString());
+//             //   jcbEstado.setSelectedItem(proyecto.getEstado());
+//                System.out.println(proyecto.getEstado());
+//                int numEntero = proyecto.getEstado();
+//                String numCadena = numEntero + "";
+//                    jcbEstado.addItem(numCadena);
+//            } catch (Exception e) {
+//
+//            }
+//        }
+    }//GEN-LAST:event_jbBuscarActionPerformed
+    public void limpiar() {
+        jtxtNombre.setText("");
+        jtxtDescripcion.setText("");
+     //   jcbEstado.setSelectedIndex(0);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
@@ -165,10 +231,13 @@ public class ViewProyecto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbGuardar;
-    private javax.swing.JCheckBox jcbEstado;
+    private javax.swing.JComboBox<String> jcbEstado;
     private com.toedter.calendar.JDateChooser jdcFechaInicio;
     private javax.swing.JTextField jtxtDescripcion;
+    private javax.swing.JTextField jtxtIdBuscar;
     private javax.swing.JTextField jtxtNombre;
     // End of variables declaration//GEN-END:variables
 }

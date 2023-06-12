@@ -35,7 +35,7 @@ public class ProyectoData {
             ps.setString(1, proyecto.getNombre());
             ps.setString(2, proyecto.getDescripcion());
             ps.setDate(3, Date.valueOf(proyecto.getFechaInicio())); // pasar de localdate a date para sql
-            ps.setInt(4, 1);
+            ps.setInt(4, proyecto.getEstado());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
