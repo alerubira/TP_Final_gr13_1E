@@ -196,4 +196,30 @@ public class EquipoData {
         return equipos;
     }
     
+       public List<Equipo> traerTodosActivos(){
+        List<Equipo> equipos = new ArrayList();
+        String sql = "SELECT * FROM equipo where estado = 1";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Equipo c1 = new Equipo(); 
+                ProyectoData pd = new ProyectoData();
+                c1.setIdEquipo(rs.getInt("idequipo"));
+                c1.setFechaCreacion(rs.getDate("fechaCreacion").toLocalDate());
+                c1.setNombre(rs.getString("nombre"));
+                c1.setProyecto(pd.buscarProyectoPorId(rs.getInt("idProyecto")));
+                c1.setEstado(rs.getBoolean("estado"));
+                equipos.add(c1);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla equipoMiembro " + ex.getMessage());
+        }
+        
+        return equipos;
+    }
+    
 }
