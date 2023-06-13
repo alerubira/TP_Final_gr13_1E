@@ -6,6 +6,8 @@ package Vistas;
 
 import Data.ProyectoData;
 import Entidad.Proyecto;
+import static Vistas.ViewCrearMiembro.validarLetras;
+import java.sql.Date;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
@@ -42,6 +44,9 @@ public class ViewProyecto extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jdcFechaInicio = new com.toedter.calendar.JDateChooser();
         jcbEstado = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         jLabel1.setText("CREAR NUEVO PROYECTO");
 
@@ -75,6 +80,16 @@ public class ViewProyecto extends javax.swing.JInternalFrame {
 
         jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
 
+        jLabel6.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel6.setForeground(new java.awt.Color(0, 255, 0));
+        jLabel6.setText("1- INICIADO");
+
+        jLabel7.setForeground(new java.awt.Color(255, 255, 51));
+        jLabel7.setText("2- PENDIENDTE");
+
+        jLabel8.setForeground(new java.awt.Color(0, 51, 255));
+        jLabel8.setText("3- FINALIZADO");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,38 +98,44 @@ public class ViewProyecto extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(13, 13, 13)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel5))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jdcFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel7)
+                                                .addComponent(jLabel8)
+                                                .addComponent(jLabel6)))
+                                        .addComponent(jdcFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel3))
+                                        .addGap(12, 12, 12)
+                                        .addComponent(jbGuardar)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jtxtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jtxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(9, 9, 9))))
+                                        .addComponent(jButton2))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtxtDescripcion)
+                                    .addComponent(jtxtNombre)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(jbGuardar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
-                .addContainerGap(65, Short.MAX_VALUE))
+                        .addGap(110, 110, 110)
+                        .addComponent(jLabel1)))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(27, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -124,20 +145,29 @@ public class ViewProyecto extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jtxtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jdcFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(15, 15, 15)
+                        .addComponent(jdcFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7)))
+                            .addComponent(jLabel6))
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jbGuardar)
-                            .addComponent(jButton2)))
-                    .addComponent(jLabel4))
-                .addGap(64, 64, 64))
+                            .addComponent(jButton2))))
+                .addGap(50, 50, 50))
         );
 
         pack();
@@ -152,32 +182,61 @@ public class ViewProyecto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-
-        ProyectoData proyectoData = new ProyectoData();
-        Proyecto proyecto = new Proyecto();
-        proyecto.setNombre(jtxtNombre.getText());
-        proyecto.setDescripcion(jtxtDescripcion.getText());
-        java.util.Date fechaSeleccionada = jdcFechaInicio.getDate();
-        java.sql.Date fechaSQL = new java.sql.Date(fechaSeleccionada.getTime());
-        // Convertir a LocalDate
-        LocalDate fechaLocal = fechaSQL.toLocalDate();
-        proyecto.setFechaInicio(fechaLocal);
-        String estadoSeleccionadoString = (String) jcbEstado.getSelectedItem();
-        int estadoSeleccionado = Integer.parseInt(estadoSeleccionadoString);
-        proyecto.setEstado(estadoSeleccionado);
-        proyectoData.guardarProyecto(proyecto);
-        limpiar();
-        jcbEstado.addItem(String.valueOf(1));
-        jcbEstado.addItem(String.valueOf(2));
-        jcbEstado.addItem(String.valueOf(3));
+     //   Date selectedDate = (Date) jdcFechaInicio.getDate();
+        if (jtxtNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "CAMPO Nombre -> VACIO!!", "Advertencia!", JOptionPane.WARNING_MESSAGE);
+            jtxtNombre.requestFocus();
+        } else if (!validarLetrasYNumeros(jtxtNombre.getText().trim())) {
+            JOptionPane.showMessageDialog(this, "Dato Nombre incorrecto >> Intente nuevamente...", "Error!", JOptionPane.ERROR_MESSAGE);
+            jtxtNombre.requestFocus();
+            jtxtNombre.setText("");
+        } else if (jtxtDescripcion.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "CAMPO Descripción -> VACIO!!", "Advertencia!", JOptionPane.WARNING_MESSAGE);
+            jtxtDescripcion.requestFocus();
+        } else if (!validarLetrasYNumeros(jtxtDescripcion.getText())) {
+            JOptionPane.showMessageDialog(this, "Dato Descripción incorrecto >> Intente nuevamente...", "Error!", JOptionPane.ERROR_MESSAGE);
+            jtxtDescripcion.requestFocus();
+            jtxtDescripcion.setText("");
+        } else if (jdcFechaInicio.getDate()==null) {
+            JOptionPane.showMessageDialog(this, "CAMPO Fecha -> VACIO!!", "Advertencia!", JOptionPane.WARNING_MESSAGE);
+            jdcFechaInicio.requestFocus();
+        } else {
+            try {
+                ProyectoData proyectoData = new ProyectoData();
+                Proyecto proyecto = new Proyecto();
+                proyecto.setNombre(jtxtNombre.getText());
+                proyecto.setDescripcion(jtxtDescripcion.getText());
+                java.util.Date fechaSeleccionada = jdcFechaInicio.getDate();
+                java.sql.Date fechaSQL = new java.sql.Date(fechaSeleccionada.getTime());
+                // Convertir a LocalDate
+                LocalDate fechaLocal = fechaSQL.toLocalDate();
+                proyecto.setFechaInicio(fechaLocal);
+                String estadoSeleccionadoString = (String) jcbEstado.getSelectedItem();
+                int estadoSeleccionado = Integer.parseInt(estadoSeleccionadoString);
+                proyecto.setEstado(estadoSeleccionado);
+                proyectoData.guardarProyecto(proyecto);
+                limpiar();
+                jcbEstado.addItem(String.valueOf(1));
+                jcbEstado.addItem(String.valueOf(2));
+                jcbEstado.addItem(String.valueOf(3));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "El proyecto no pudo ser agregado!", "Error!", JOptionPane.ERROR_MESSAGE);
+                limpiar();
+            }
+        }
     }//GEN-LAST:event_jbGuardarActionPerformed
     public void limpiar() {
         jtxtNombre.setText("");
         jtxtDescripcion.setText("");
-          jcbEstado.removeAllItems();
+        jcbEstado.removeAllItems();
         jdcFechaInicio.setDate(null);
 
     }
+
+    public static boolean validarLetrasYNumeros(String letrasNumeros) {
+        return letrasNumeros.matches("^[a-zA-Z0-9 ]*$");
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
@@ -186,6 +245,9 @@ public class ViewProyecto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JButton jbGuardar;
     private javax.swing.JComboBox<String> jcbEstado;
     private com.toedter.calendar.JDateChooser jdcFechaInicio;
