@@ -162,7 +162,6 @@ public class ViewProyecto extends javax.swing.JInternalFrame {
         // Convertir a LocalDate
         LocalDate fechaLocal = fechaSQL.toLocalDate();
         proyecto.setFechaInicio(fechaLocal);
-
         String estadoSeleccionadoString = (String) jcbEstado.getSelectedItem();
         int estadoSeleccionado = Integer.parseInt(estadoSeleccionadoString);
         proyecto.setEstado(estadoSeleccionado);
